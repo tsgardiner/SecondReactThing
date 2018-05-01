@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
 import { Form, Text, TextArea, Select, } from 'react-form'
 
 import './css/EnquiryForm.css'
@@ -37,14 +36,14 @@ class EnquiryForm extends Component {
 
 		this.setState ({ 'submittedValues' : event }) //Set state //Probably not needed
 
-		//console.log(this.state)		
+		console.log(this.state)		
 	}
 
 	
 	render() {
 		return (						
 			<div className='EnquiryForm'>
-				<Form onSubmit={this.handleSubmit}>				
+				<Form className="enquiry-form" onSubmit={this.handleSubmit} method="POST">				
 	    			{formApi => (
 				      	<form onSubmit={formApi.submitForm} id="form">
 				      		
