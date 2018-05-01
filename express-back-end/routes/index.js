@@ -21,11 +21,17 @@ transporter.verify((error, success) => {
 })
 
 router.post('/send', (req, res, next) => {
+	console.log('')
+	console.log('I think things start going wrong here')
+	console.log('.....................................')
+	console.log('')
   var firstName = req.body.firstName
   console.log(firstName)
+  console.log('')
   var lastName = req.body.lastName
   var name = firstName + ' ' + lastName
   console.log(name)
+  console.log('')
   var enquiryType = req.body.enquiryType
   var email = req.body.email
   var comments = req.body.comments
@@ -43,10 +49,9 @@ router.post('/send', (req, res, next) => {
       res.json({
         msg: 'fail'
       })
-    } else {
+    } else {    	
       res.json({
         msg: 'success'
-        console.log('Made it here?')
       })
     }
   })
