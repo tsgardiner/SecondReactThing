@@ -50,15 +50,12 @@ class EnquiryForm extends Component {
 		console.log(formData)
 
 		axios.post('http://localhost:3002/send', { formData }) 
-			.then(res => {
-				console.log(res)
-				console.log(res.data)
-			})
 			.then((response) => {
-				if (response.data.message === 'success') {
+				console.log(response)
+				if (response.data.msg === 'success') {
 					alert('Message Sent.')
 					//this.resetForm()  //Function needed, not sure if compatible with react-form
-				} else if (response.data.message === 'fail') {
+				} else if (response.data.msg === 'fail') {
 					alert('Message failed to send.')
 				}
 			})
@@ -66,7 +63,6 @@ class EnquiryForm extends Component {
 		//console.log(event) //Shows form data on console
 		//console.log(this.state) //Show current state		
 	}
-
 	
 	render() {
 		return (						

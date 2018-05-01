@@ -22,8 +22,10 @@ transporter.verify((error, success) => {
 
 router.post('/send', (req, res, next) => {
   var firstName = req.body.firstName
+  console.log(firstName)
   var lastName = req.body.lastName
   var name = firstName + ' ' + lastName
+  console.log(name)
   var enquiryType = req.body.enquiryType
   var email = req.body.email
   var comments = req.body.comments
@@ -44,6 +46,7 @@ router.post('/send', (req, res, next) => {
     } else {
       res.json({
         msg: 'success'
+        console.log('Made it here?')
       })
     }
   })
