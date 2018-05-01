@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Text, TextArea, Select, } from 'react-form'
-
+import axios from 'axios'
 import './css/EnquiryForm.css'
 
 //TODO Look into making urgent emails as a result of this.
@@ -19,24 +19,52 @@ const enquiryOptions = [
     },
  ]
 
-
 class EnquiryForm extends Component {
 	constructor(props) {
 		super (props)
-		this.state = {}
-
+		this.state = {
+			formData: {
+				enquiryType: '',
+				firstName: '',
+				lastName: '',
+				email: '',
+				comments: '' 
+			}
+		}
+		//this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+	}	
+
+	//Something from react-form has been altered and the onChange that was working isn't anymore. 
+	//I added this to try getting state to update, but I never got it passing the right data with event.
+	handleChange(event) {
+		//console.log(event)
+		//this.setState({ })
 	}
-	
 
-	handleSubmit(event) {
-		console.log(event) //Shows form data on console
-		//event.preventDefault(); Not working for some reason
-		//const data = new FormData(event.target)	
+	handleSubmit(event) {		
+		//event.preventDefault() //Not working for some reason //The reason was because react-form is not the default.	
+		this.setState ({ 'formData' : event }) //Set state 
 
-		this.setState ({ 'submittedValues' : event }) //Set state //Probably not needed
+		const formData = this.state
+		console.log(formData)
 
-		console.log(this.state)		
+		axios.post('http://localhost:3002/send', { formData }) 
+			.then(res => {
+				console.log(res)
+				console.log(res.data)
+			})
+			.then((response) => {
+				if (response.data.message === 'success') {
+					alert('Message Sent.')
+					//this.resetForm()  //Function needed, not sure if compatible with react-form
+				} else if (response.data.message === 'fail') {
+					alert('Message failed to send.')
+				}
+			})
+
+		//console.log(event) //Shows form data on console
+		//console.log(this.state) //Show current state		
 	}
 
 	
@@ -45,27 +73,21 @@ class EnquiryForm extends Component {
 			<div className='EnquiryForm'>
 				<Form className="enquiry-form" onSubmit={this.handleSubmit} method="POST">				
 	    			{formApi => (
-				      	<form onSubmit={formApi.submitForm} id="form">
-				      		
-				      		<label htmlFor="enquiryType" className="d-block">Type of Enquiry: </label>
-					        <Select field="enquiryType" id="enquiryType" options={enquiryOptions} className="mb-4" />
-					       
+				      	<form onSubmit={formApi.submitForm} id="form">				      		
+				      		<label htmlFor="enquiryType" >Type of Enquiry: </label>
+					        <Select field="enquiryType" id="enquiryType" options={enquiryOptions} />					       
 					        <label htmlFor="firstName">First name: </label>					        
-					        <Text field="firstName" id="firstName" />
-					        
+					        <Text field="firstName" id="firstName" />					        
 					        <label htmlFor="lastName">Last name: </label>
-					        <Text field="lastName" id="lastName" />				        
-					        
+					        <Text field="lastName" id="lastName" />	  
 					        <label htmlFor="email">Email Address: </label>
 					        <Text 	
 					        	field="email" id="email" 
-					        	//Might use this might not
+					        	//Might use this might not //Validation was the reason I chose to try react-form
 				        		//validate={validate} asyncValidate={emailValidate}
 					        />	
-
 					        <label htmlFor="comments">Comments: </label>
-					        <TextArea field="comments" id="comments" />        
-					        
+					        <TextArea field="comments" id="comments" />   			        
 					        <button type="submit" className="submitEnquiry">
 					          Submit
 					        </button>
