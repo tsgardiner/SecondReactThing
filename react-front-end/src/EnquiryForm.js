@@ -36,7 +36,7 @@ class EnquiryForm extends Component {
 	}	
 
 	//Something from react-form has been altered and the onChange that was working isn't anymore. 
-	//I added this to try getting state to update, but I never got it passing the right data with event.
+	//I added this to try getting state to update as the form was edited, but I never got it passing the right data with event.
 	handleChange(event) {
 		//console.log(event)
 		//this.setState({ })
@@ -47,7 +47,7 @@ class EnquiryForm extends Component {
 		this.setState ({ 'formData' : event }) //Set state 
 
 		const formData = this.state.formData
-		console.log(formData)
+		//console.log(formData)
 
 		axios.post('http://localhost:3002/send', { formData }) 
 			.then((response) => {
