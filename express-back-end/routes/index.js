@@ -25,16 +25,25 @@ router.post('/send', (req, res, next) => {
 	console.log('I think things start going wrong here')
 	console.log('.....................................')
 	console.log('')
-  var firstName = req.body.firstName
+	console.log('req')
+	console.log(req.body)
+	console.log('')
+	//console.log('res')
+	//console.log(res)
+	
+
+  var firstName = req.body.formData.firstName
   console.log(firstName)
   console.log('')
-  var lastName = req.body.lastName
+  var lastName = req.body.formData.lastName
   var name = firstName + ' ' + lastName
   console.log(name)
   console.log('')
-  var enquiryType = req.body.enquiryType
-  var email = req.body.email
-  var comments = req.body.comments
+  var enquiryType = req.body.formData.enquiryType
+  var email = req.body.formData.email
+  var comments = req.body.formData.comments
+
+  
   var content = `name: ${name} \n email: ${email} \n  enquiryType: ${enquiryType} \n  message: ${comments} `
 
   var mail = {
@@ -56,6 +65,5 @@ router.post('/send', (req, res, next) => {
     }
   })
 })
-
 
 module.exports = router

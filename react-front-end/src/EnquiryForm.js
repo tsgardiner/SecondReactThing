@@ -7,15 +7,15 @@ import './css/EnquiryForm.css'
 const enquiryOptions = [
     {
       label: 'Urgent',
-      value: 'urgent',
+      value: 'Urgent',
     },
     {
       label: 'Not working',
-      value: 'notworking',
+      value: 'Not working',
     },
     {
       label: "Thank you",
-      value: 'thankyou',
+      value: 'Thank you',
     },
  ]
 
@@ -46,7 +46,7 @@ class EnquiryForm extends Component {
 		//event.preventDefault() //Not working for some reason //The reason was because react-form is not the default.	
 		this.setState ({ 'formData' : event }) //Set state 
 
-		const formData = this.state
+		const formData = this.state.formData
 		console.log(formData)
 
 		axios.post('http://localhost:3002/send', { formData }) 
