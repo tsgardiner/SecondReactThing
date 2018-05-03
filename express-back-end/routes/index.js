@@ -3,6 +3,7 @@ var router = express.Router();
 var nodemailer = require('nodemailer')
 const credentials = require('../credentials/credentials')
 const PDFDocument = require('pdfkit')
+var GeneratePDF = require('../pdf/GeneratePDF')
 
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',
@@ -49,19 +50,20 @@ router.post('/send', (req, res, next) => {
 
 	//Creating PDF 
 	const doc = new PDFDocument()
-	let fileName = name + ' ' + 'Enquiry'
+	let fileName = 'EnquiryPDF'
 	fileName = encodeURIComponent(fileName) + '.pdf'
 	console.log(fileName)
 
-	//res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
-	//res.setHeader('Content-type', 'application/pdf')
+	res.setHeader('Content-type', 'application/pdf')
+	res.setHeader('Content-disposition', 'attachment; filename="' + fileName + '"')
+	
 	doc.y = 300
 	doc.text(comments, 50, 50)
 	doc.pipe(res)
 	doc.end()
 
 	console.log('PDF DOC THING')
-	console.log(doc)
+	//console.log(doc)
 
 
 
@@ -72,20 +74,34 @@ router.post('/send', (req, res, next) => {
 		to: 'tsgardinerdevtesting@gmail.com',  //Change to email address that you want to receive messages on
 		subject: enquiryType,
 		text: content,
-		attachments: { doc }
+		attachments: [{
+    		filename: fileName,
+    		content: new Buffer(doc, 'base64'),
+    		contentType: 'application/pdf' 
+		}]
 	}
 
 	transporter.sendMail(mail, (err, data) => {
-	if (err) {
-	  res.json({
-	    msg: 'fail'
-	  })
-	} else {    	
-	  res.json({
-	    msg: 'success'
-	  })
-	}
-	})
+		if (err) {
+		  res.json({
+		    msg: 'fail'
+		  })
+		} else {    	
+		  res.json({
+		    msg: 'success'
+		  })
+		}
+	})	
 })
+
+//Catch all routes that resulted in an error and display on console.
+router.use(function (err, req, res, next) {
+	if (err) {
+		console.log('Error', err);
+	} else {
+		console.log('404')
+	}
+})
+
 
 module.exports = router
