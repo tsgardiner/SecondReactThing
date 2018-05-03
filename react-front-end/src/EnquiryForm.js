@@ -66,25 +66,35 @@ class EnquiryForm extends Component {
 	
 	render() {
 		return (						
-			<div className='EnquiryForm'>
-				<Form className="enquiry-form" onSubmit={this.handleSubmit} method="POST">				
+			<div className='col-sm-4 offset-sm-4'>
+				<Form id='contact-form' className="enquiry-form" onSubmit={this.handleSubmit} method="POST">				
 	    			{formApi => (
-				      	<form onSubmit={formApi.submitForm} id="form">				      		
+				      	<form onSubmit={formApi.submitForm} id="contact-form">		
+				      	<div className="form-group">		      		
 				      		<label htmlFor="enquiryType" >Type of Enquiry: </label>
-					        <Select field="enquiryType" id="enquiryType" options={enquiryOptions} />					       
+					        <Select field="enquiryType" id="enquiryType" className="form-control" options={enquiryOptions} />	
+					    </div>
+					    <div className="form-group">    				       
 					        <label htmlFor="firstName">First name: </label>					        
-					        <Text field="firstName" id="firstName" />					        
+					        <Text field="firstName" id="firstName" className="form-control"/>
+				        </div>
+				        <div className="form-group">					        
 					        <label htmlFor="lastName">Last name: </label>
-					        <Text field="lastName" id="lastName" />	  
+					        <Text field="lastName" id="lastName" className="form-control" />	  
+				        </div>
+					    <div className="form-group">    
 					        <label htmlFor="email">Email Address: </label>
 					        <Text 	
-					        	field="email" id="email" 
+					        	field="email" id="email" className="form-control"
 					        	//Might use this might not //Validation was the reason I chose to try react-form
 				        		//validate={validate} asyncValidate={emailValidate}
 					        />	
+				        </div>
+				        <div className="form-group">
 					        <label htmlFor="comments">Comments: </label>
-					        <TextArea field="comments" id="comments" />   			        
-					        <button type="submit" className="submitEnquiry">
+					        <TextArea field="comments" className="form-control" id="comments" />   	
+				        </div>		        
+					        <button type="submit" className="btn btn-primary">
 					          Submit
 					        </button>
 	      				</form>

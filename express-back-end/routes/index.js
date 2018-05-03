@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer')
+const fs = require('fs')
+const base64 = require('base64-stream')
 const credentials = require('../credentials/credentials')
 const PDFDocument = require('pdfkit')
-var GeneratePDF = require('../pdf/GeneratePDF')
+const pdfGenerator = require('../pdf/generate-pdf')
+
+
 
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',
@@ -32,66 +36,65 @@ router.post('/send', (req, res, next) => {
 	console.log('')
 	//console.log('res')
 	//console.log(res)
-	var firstName = req.body.formData.firstName
-	
-	console.log(firstName)
-	console.log('')
-	
+	var firstName = req.body.formData.firstName	
 	var lastName = req.body.formData.lastName
-	var name = firstName + ' ' + lastName
-	
-	console.log(name)
-	console.log('')
-	
+	var name = firstName + ' ' + lastName	
 	var enquiryType = req.body.formData.enquiryType
 	var email = req.body.formData.email
 	var comments = req.body.formData.comments
 
-
 	//Creating PDF 
-	const doc = new PDFDocument()
+	//The pdf creation and buffer will get moved to generate-pdf once it's working
+	let doc = new PDFDocument()	
+	
 	let fileName = 'EnquiryPDF'
 	fileName = encodeURIComponent(fileName) + '.pdf'
 	console.log(fileName)
 
 	res.setHeader('Content-type', 'application/pdf')
 	res.setHeader('Content-disposition', 'attachment; filename="' + fileName + '"')
+
+	let buffers = []
+	doc.on('data', buffers.push.bind(buffers))
 	
-	doc.y = 300
-	doc.text(comments, 50, 50)
-	doc.pipe(res)
-	doc.end()
+	doc.on('end', () => {
 
-	console.log('PDF DOC THING')
-	//console.log(doc)
+		let pdfData = Buffer.concat(buffers)	
 
+		var content = `name: ${name} \n email: ${email} \n  enquiryType: ${enquiryType} \n  message: ${comments} `
 
-
-	var content = `name: ${name} \n email: ${email} \n  enquiryType: ${enquiryType} \n  message: ${comments} `
-
-	var mail = {
-		from: name,
-		to: 'tsgardinerdevtesting@gmail.com',  //Change to email address that you want to receive messages on
-		subject: enquiryType,
-		text: content,
-		attachments: [{
-    		filename: fileName,
-    		content: new Buffer(doc, 'base64'),
-    		contentType: 'application/pdf' 
-		}]
-	}
-
-	transporter.sendMail(mail, (err, data) => {
-		if (err) {
-		  res.json({
-		    msg: 'fail'
-		  })
-		} else {    	
-		  res.json({
-		    msg: 'success'
-		  })
+		var mail = {
+			from: name,
+			to: 'tsgardinerdevtesting@gmail.com',  //Change to email address that you want to receive messages on
+			subject: enquiryType,
+			text: content,
+			attachments: [{
+	    		filename: fileName,
+	    		content: pdfData,
+	    		contentType: 'application/pdf'
+			}]
 		}
-	})	
+
+		transporter.sendMail(mail, (err, data) => {
+			if (err) {
+			  res.json({
+			    msg: 'fail'
+			  })
+			} else {    	
+			  res.json({
+			    msg: 'success'
+			  })
+			}
+		})	
+
+	}) //END DOC ON
+
+	//PDF Content
+	doc.text(name, 50, 50)
+	doc.text(email)
+	doc.text(enquiryType)
+	doc.text(comments)
+	doc.end()
 })
 
 //Catch all routes that resulted in an error and display on console.
