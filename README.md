@@ -34,7 +34,7 @@ $ npm start
 ```
 
 ### It should look something like this
-[ExampleWorkingTerminals](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/terminalExample.JPG)
+![alt text](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/terminalExample.JPG)
 
 
 ### Created Using
