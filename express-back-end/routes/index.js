@@ -28,12 +28,9 @@ router.post('/send', (req, res, next) => {
 
 	//Create pdf document
 	pdfGenerator.GeneratePDF(formData)	
-	
-})
 
-
-//Sends email once pdf has been created
-exports.SendMail = function(mail) {
+	//Sends email once pdf has been created
+	exports.SendMail = function(mail) {
 		transporter.sendMail(mail, (err, data) => {
 			if (err) {
 			  res.json({
@@ -45,7 +42,11 @@ exports.SendMail = function(mail) {
 			  })
 			}
 		})	
-}
+	}	
+})
+
+
+
 
 //Catch all routes that resulted in an error and display on console.
 router.use(function (err, req, res, next) {
