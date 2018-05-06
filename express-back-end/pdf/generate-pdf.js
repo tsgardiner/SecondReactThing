@@ -1,9 +1,11 @@
 const pdfDocument = require('pdfkit')
+const moment = require('moment')
 const emailSender = require('../routes/index')
 
 //Create pdf file and call send with mail data on completion.
 exports.GeneratePDF = function(formData) {	
 	var pdfDoc = new pdfDocument()
+	var currentDate = moment().format('MMMM Do YYYY, h:mm')
 	//console.log(formData)
 
 	//Address emails will be sent to.
@@ -15,7 +17,9 @@ exports.GeneratePDF = function(formData) {
 	var enquiryType = formData.enquiryType
 	var email = formData.email
 	var comments = formData.comments
-	var content = `name: ${name} \n email: ${email} \n  enquiryType: ${enquiryType} \n  message: ${comments} `
+
+	//Content for standard email text.
+	var content = `name: ${name} \n email: ${email} \n  enquiryType: ${enquiryType} `
 
 
 	//PDF Content
@@ -51,13 +55,21 @@ exports.GeneratePDF = function(formData) {
 	//For text styling options see: http://pdfkit.org/docs/text.html 
 	function StylePDF() {
 
-		pdfDoc.fontSize(25)
-			  .text('Enquiry Form', 100, 50)
+		pdfDoc.fontSize(25)	 	
+	  		  .text ('Enquiry Form', { align: 'center' })	
 
+  		pdfDoc.moveDown()  
+  		pdfDoc.font('Times-Roman')
 		pdfDoc.fontSize(10)
-		pdfDoc.text('From: ' + name, 100, 125)
+		pdfDoc.text(currentDate, {align: 'right'}) //Needs a table to be placed on the same line as name.
+		pdfDoc.text('From: ' + name)		
 		pdfDoc.text('Email: ' + email)
 		pdfDoc.text('Enquiry Topic: ' + enquiryType)
+
+		pdfDoc.moveDown(4)  
+  		pdfDoc.font('Helvetica')  		
+		pdfDoc.fontSize(14)
+		pdfDoc.text(comments) //This looks better with more text
 	}
 }
 

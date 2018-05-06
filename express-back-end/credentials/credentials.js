@@ -6,12 +6,13 @@ const user = 'tsgardinerdevtesting@gmail.com'
 const clientId = '738582413182-vo04l0k27ufau26mvlol0hpj8drmbakd.apps.googleusercontent.com'
 const clientSecret = 'khwB8o_5zRDRJzzIy8mEPyMr'
 const refreshToken = '1/zDSGCtx6wn6f5FIg37UncUYhYpE8Prqb4SRqsM6WjiE'
-const accessToken = 'ya29.GluzBfPpLuS5utrsC1dWg_cq58qAA63d754A7Ux9POcCUttIazDEThCt8XnMrKPKvnCinHhJMwQoTKaSNi4UPXk_A9N4Qcm1XNQhTkAwyySWgCaklK58Yr8lpFL1'
+//const accessToken = 'ya29.GluzBfPpLuS5utrsC1dWg_cq58qAA63d754A7Ux9POcCUttIazDEThCt8XnMrKPKvnCinHhJMwQoTKaSNi4UPXk_A9N4Qcm1XNQhTkAwyySWgCaklK58Yr8lpFL1'
+
 
 module.exports = {
 	user,	
 	clientId,
 	clientSecret,
 	refreshToken,
-	accessToken
 }
+

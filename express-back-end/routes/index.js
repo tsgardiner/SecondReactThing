@@ -5,20 +5,21 @@ const pdfDocument = require('pdfkit')
 const credentials = require('../credentials/credentials')
 var pdfGenerator = require('../pdf/generate-pdf')
 
-
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',
 	auth: { 
 		type: 'OAuth2',
-		...credentials
+		...credentials		
 	}
 })
 
+//Refresh access key for gmail
+//Bug: This currently refreshes twice on server start and on send as the token isn't updated anywhere yet.
+//Will need a database that holds the current access token
 transporter.on('token', token => {
-	console.log('A new access token was generated');
-    console.log('User: %s', token.user);
-    console.log('Access Token: %s', token.accessToken);
-    console.log('Expires: %s', new Date(token.expires));
+	console.log('A new access token was generated')
+    console.log('User: %s', token.user)
+    console.log('Access Token: %s', token.accessToken)
 })
 
 //Server startup error checking
@@ -26,7 +27,11 @@ transporter.verify((error, success) => {
 	if (error) {
 		console.log(error)
 	} else { 
+		console.log('')
+		console.log('................................')
 		console.log('Server is ready')
+		console.log('................................')
+		console.log('')
 	}
 })
 
