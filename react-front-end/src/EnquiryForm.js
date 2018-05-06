@@ -3,7 +3,6 @@ import { Form, Text, TextArea, Select, } from 'react-form'
 import axios from 'axios'
 import './css/EnquiryForm.css'
 
-//TODO Look into making urgent emails as a result of this.
 const enquiryOptions = [
     {
       label: 'Urgent',
@@ -35,20 +34,14 @@ class EnquiryForm extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}	
 
-	//Something from react-form has been altered and the onChange that was working isn't anymore. 
-	//I added this to try getting state to update as the form was edited, but I never got it passing the right data with event.
-	handleChange(event) {
-		//console.log(event)
-		//this.setState({ })
-	}
-
-	handleSubmit(event) {		
-		//event.preventDefault() //Not working for some reason //The reason was because react-form is not the default.	
+	handleSubmit(event) {
 		this.setState ({ 'formData' : event }) //Set state 
 
 		const formData = this.state.formData
 		//console.log(formData)
 
+		//Call Express post function sending the form data. 
+		//Waits for response of successful or failed sending.
 		axios.post('http://localhost:3002/send', { formData }) 
 			.then((response) => {
 				console.log(response)
@@ -58,10 +51,7 @@ class EnquiryForm extends Component {
 				} else if (response.data.msg === 'fail') {
 					alert('Message failed to send.')
 				}
-			})
-
-		//console.log(event) //Shows form data on console
-		//console.log(this.state) //Show current state		
+			})			
 	}
 	
 	render() {

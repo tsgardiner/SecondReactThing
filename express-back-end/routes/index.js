@@ -14,6 +14,14 @@ const transporter = nodemailer.createTransport({
 	}
 })
 
+transporter.on('token', token => {
+	console.log('A new access token was generated');
+    console.log('User: %s', token.user);
+    console.log('Access Token: %s', token.accessToken);
+    console.log('Expires: %s', new Date(token.expires));
+})
+
+//Server startup error checking
 transporter.verify((error, success) => {
 	if (error) {
 		console.log(error)
@@ -22,6 +30,7 @@ transporter.verify((error, success) => {
 	}
 })
 
+//Post send function called by handleSubmit in EnquiryForm
 router.post('/send', (req, res, next) => {
 
 	var formData = req.body.formData
@@ -30,6 +39,7 @@ router.post('/send', (req, res, next) => {
 	pdfGenerator.GeneratePDF(formData)	
 
 	//Sends email once pdf has been created
+	//Called externally
 	exports.SendMail = function(mail) {
 		transporter.sendMail(mail, (err, data) => {
 			if (err) {
@@ -45,9 +55,6 @@ router.post('/send', (req, res, next) => {
 	}	
 })
 
-
-
-
 //Catch all routes that resulted in an error and display on console.
 router.use(function (err, req, res, next) {
 	if (err) {
@@ -56,6 +63,5 @@ router.use(function (err, req, res, next) {
 		console.log('404')
 	}
 })
-
 
 module.exports = router

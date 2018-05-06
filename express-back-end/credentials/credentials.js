@@ -1,13 +1,17 @@
+
+//Gmail OAuth2 settings for sending email using a gmail account
+//Guide followed for setting up account with OAuth2: https://ciunkos.com/creating-contact-forms-with-nodemailer-and-react
+//Guide on how to make refresh tokens work: http://masashi-k.blogspot.co.nz/2013/06/sending-mail-with-gmail-using-xoauth2.html
 const user = 'tsgardinerdevtesting@gmail.com'
-const refreshToken = '1/9mMayH8kyLpTYggbh4zTQxtnmyxV8xTLiozmCaB-0j4'
-const accessToken = 'ya29.GluzBcJ2tCh-xw4unjb_8R0xhYiGg2XZ5F48ermRfa0LhOmmI5FK9sNWDy-a-itkPAJ_cy_c8NcZ7-YxS6pVnPuh1slt0gCArQ1taoZcNU6ZjeCKGJwj9XyzyVpa'
-const clientId = '759022451800-crog5erslkk3rc0juqbvihau75gj9e5t.apps.googleusercontent.com'
-const clientSecret = 't1XE-__FHq9Pe5XojOFrzyQ4'
+const clientId = '738582413182-vo04l0k27ufau26mvlol0hpj8drmbakd.apps.googleusercontent.com'
+const clientSecret = 'khwB8o_5zRDRJzzIy8mEPyMr'
+const refreshToken = '1/zDSGCtx6wn6f5FIg37UncUYhYpE8Prqb4SRqsM6WjiE'
+const accessToken = 'ya29.GluzBfPpLuS5utrsC1dWg_cq58qAA63d754A7Ux9POcCUttIazDEThCt8XnMrKPKvnCinHhJMwQoTKaSNi4UPXk_A9N4Qcm1XNQhTkAwyySWgCaklK58Yr8lpFL1'
 
 module.exports = {
-	user,
-	refreshToken,
-	accessToken,
+	user,	
 	clientId,
-	clientSecret
+	clientSecret,
+	refreshToken,
+	accessToken
 }

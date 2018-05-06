@@ -1,12 +1,13 @@
 const pdfDocument = require('pdfkit')
 const emailSender = require('../routes/index')
 
-
-//Create pdf file 
+//Create pdf file and call send with mail data on completion.
 exports.GeneratePDF = function(formData) {	
-	var doc = new pdfDocument()
+	var pdfDoc = new pdfDocument()
+	//console.log(formData)
 
-	console.log(formData)
+	//Address emails will be sent to.
+	var sendToEmail = 'tsgardinerdevtesting@gmail.com'
 
 	var firstName = formData.firstName	
 	var lastName = formData.lastName
@@ -19,22 +20,19 @@ exports.GeneratePDF = function(formData) {
 
 	//PDF Content
 	let fileName = firstName + lastName + 'Enquiry' + '.pdf'
-	doc.text(name, 50, 50)
-	doc.text(email)
-	doc.text(enquiryType)
-	doc.text(comments)
-	doc.end()
+	StylePDF()
+	pdfDoc.end()
 
 	let buffers = []
-	doc.on('data', buffers.push.bind(buffers))
+	pdfDoc.on('data', buffers.push.bind(buffers))
 
-	doc.on('end', () => {
+	pdfDoc.on('end', () => {
 
 		var pdfData = Buffer.concat(buffers)			
 
 		var mail = {
 			from: name,
-			to: 'tsgardinerdevtesting@gmail.com',  //Change to email address that you want to receive messages on
+			to: sendToEmail,  //Change sendToEmail to email address that you want to receive messages on.
 			subject: enquiryType,
 			text: content,  
 			attachments: [{
@@ -47,7 +45,22 @@ exports.GeneratePDF = function(formData) {
 		//Send email with all content and pdf attachment
 		emailSender.SendMail(mail)
 
+	}) //END OF pdfDoc ON END
 
-	}) //END OF DOC ON END
+	//Set all styling for pdf document 
+	//For text styling options see: http://pdfkit.org/docs/text.html 
+	function StylePDF() {
+
+		pdfDoc.fontSize(25)
+			  .text('Enquiry Form', 100, 50)
+
+		pdfDoc.fontSize(10)
+		pdfDoc.text('From: ' + name, 100, 125)
+		pdfDoc.text('Email: ' + email)
+		pdfDoc.text('Enquiry Topic: ' + enquiryType)
+	}
 }
+
+
+
 
