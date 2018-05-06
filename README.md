@@ -39,14 +39,10 @@ It should look something like this.
 
 
 ### Created Using
-
-```
 [Express application generator](https://expressjs.com/en/starter/generator.html)
 [Create React App](https://github.com/facebook/create-react-app)
 [Nodemailer](https://nodemailer.com/about/)
 [PDFKit](http://pdfkit.org/)
-
-```
 
 
 ### Updating receiving email address
