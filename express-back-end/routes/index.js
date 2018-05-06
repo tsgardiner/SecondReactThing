@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
 transporter.on('token', token => {
 	console.log('A new access token was generated')
     console.log('User: %s', token.user)
-    console.log('Access Token: %s', token.accessToken)
+    //console.log('Access Token: %s', token.accessToken) //Uncomment to see accessToken on console
 })
 
 //Server startup error checking
