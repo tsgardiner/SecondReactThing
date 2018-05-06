@@ -47,7 +47,7 @@ It should look something like this.
 
 This is located in express-back-end/pdf/generate-pdf.js file on line:12.
 
-![alt text](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/sendToEmailAddress.JPG)
+![alt text](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/emailAddress.JPG)
 
 
 ### Adding Gmail account with OAuth2
