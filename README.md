@@ -38,17 +38,6 @@ It should look something like this.
 ![alt text](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/terminalExample.JPG)
 
 
-### Created Using
-
-[Express application generator](https://expressjs.com/en/starter/generator.html)
-
-[Create React App](https://github.com/facebook/create-react-app)
-
-[Nodemailer](https://nodemailer.com/about/)
-
-[PDFKit](http://pdfkit.org/)
-
-
 ### Updating receiving email address
 
 ```javascript
@@ -56,14 +45,16 @@ It should look something like this.
 	var sendToEmail = 'tsgardinerdevtesting@gmail.com' 
 ```
 
-This is located in express-back-end/pdf/generate-pdf.js file on line:12
+This is located in express-back-end/pdf/generate-pdf.js file on line:12.
+
 ![alt text](https://raw.githubusercontent.com/tsgardiner/SecondReactThing/master/images/sendToEmailAddress.JPG)
 
 
 ### Adding Gmail account with OAuth2
 
-This example should keep working with the current gmail account settings
-If you wish to change these update the express-back-end/credentials/credentials.js file
+This example should keep working with the current gmail account settings.
+
+If you wish to change these update the express-back-end/credentials/credentials.js file.
 
 Here are two guides I used for this:
 
@@ -75,3 +66,13 @@ A more detailed guide on how to use GoogleApi project settings with OAuth 2.0 Pl
 
 [Sending mail with Gmail using OAuth2](http://masashi-k.blogspot.co.nz/2013/06/sending-mail-with-gmail-using-xoauth2.html)
 
+
+### Created Using
+
+[Express application generator](https://expressjs.com/en/starter/generator.html)
+
+[Create React App](https://github.com/facebook/create-react-app)
+
+[Nodemailer](https://nodemailer.com/about/)
+
+[PDFKit](http://pdfkit.org/)
